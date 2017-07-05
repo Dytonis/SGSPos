@@ -1,0 +1,15 @@
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.csprojResolveAssemblyReference.cache
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Properties.Resources.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.csproj.GenerateResource.Cache
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\SGSPos.exe.config
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\SGSPos.exe
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\SGSPos.pdb
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.exe
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.pdb
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSHome.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Application.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSTicketOrder.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSScanDevice.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Partial.TicketOrderLine.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\Newtonsoft.Json.dll
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\Newtonsoft.Json.xml
