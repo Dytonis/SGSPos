@@ -13,6 +13,7 @@ namespace SGSPos.Pages
     public partial class SGSTicketOrder : Page, IPanelProvider
     {
         public List<Service.SGSAPI.GetTicketResponse> ticketsToUse;
+        public List<string> ticketIdsToUse = new List<string>();
         public string Batch;
 
         public SGSTicketOrder()
@@ -36,12 +37,17 @@ namespace SGSPos.Pages
             ticketOrderLine.TicketGameLabel.Text = "Game";
             ticketOrderLine.TicketPriceLabel.Text = "Price";
 
+            ticketOrderLine.TicketIDLabel.ForeColor = Color.LightCoral;
+            ticketOrderLine.TicketNumbersLabel.ForeColor = Color.LightCoral;
+            ticketOrderLine.TicketGameLabel.ForeColor = Color.LightCoral;
+            ticketOrderLine.TicketPriceLabel.ForeColor = Color.LightCoral;
+
             tableLayoutPanel1.Controls.Add(ticketOrderLine.TicketIDLabel, 0, 0);
             tableLayoutPanel1.Controls.Add(ticketOrderLine.TicketGameLabel, 1, 0);
             tableLayoutPanel1.Controls.Add(ticketOrderLine.TicketNumbersLabel, 2, 0);
             tableLayoutPanel1.Controls.Add(ticketOrderLine.TicketPriceLabel, 3, 0);
 
-            label1.Text = "Batch ID: " + Batch;
+            label1.Text = Batch;
 
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles[0].Height = 38;
@@ -66,6 +72,13 @@ namespace SGSPos.Pages
                     ticketLine.TicketIDLabel.Text = ticket.ticket.ticketid;
                     ticketLine.TicketGameLabel.Text = ticket.ticket.gameid;
                     ticketLine.TicketNumbersLabel.Text = ticket.ticket.numbers;
+
+                    ticketLine.TicketIDLabel.ForeColor = Color.GhostWhite;
+                    ticketLine.TicketNumbersLabel.ForeColor = Color.GhostWhite;
+                    ticketLine.TicketGameLabel.ForeColor = Color.GhostWhite;
+                    ticketLine.TicketPriceLabel.ForeColor = Color.GhostWhite;
+
+                    ticketIdsToUse.Add(ticket.ticket.ticketid);
                     try
                     {
                         ticketLine.TicketPriceLabel.Text = Convert.ToDecimal(ticket.ticket.betamount).ToString("C");
@@ -92,6 +105,13 @@ namespace SGSPos.Pages
         private void button1_Click(object sender, EventArgs e)
         {
             Switch(new SGSHome());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Popups.PopupChoosePrintAction popup = new Popups.PopupChoosePrintAction(this);
+            popup.ticketIds = ticketIdsToUse.ToArray();
+            popup.Pop(this, popup);
         }
     }
 }

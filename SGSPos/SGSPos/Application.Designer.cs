@@ -34,7 +34,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackgroundImage = global::SGSPos.Properties.Resources.pp_pos_bg;
+            this.ClientSize = new System.Drawing.Size(1280, 768);
             this.Name = "Application";
             this.Text = "Application";
             this.Load += new System.EventHandler(this.Application_Load);

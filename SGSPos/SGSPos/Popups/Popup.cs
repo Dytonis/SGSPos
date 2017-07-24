@@ -5,6 +5,8 @@ namespace SGSPos.Popups
 {
     public partial class Popup : Form
     {
+        public Pages.Page PanelParent;
+
         public Popup()
         {
             this.FormBorderStyle = FormBorderStyle.None;

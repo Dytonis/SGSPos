@@ -10,9 +10,15 @@ namespace SGSPos
             InitializeComponent();
         }
 
-        private void Application_Load(object sender, EventArgs e)
+        private async void Application_Load(object sender, EventArgs e)
         {
+            //await Service.SGSAPI.GetTicketImage();
             Switch(new SGSPos.Pages.SGSHome());
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

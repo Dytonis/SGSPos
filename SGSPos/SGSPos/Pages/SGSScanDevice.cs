@@ -12,6 +12,8 @@ namespace SGSPos.Pages
 {
     public partial class SGSScanDevice : Page, IPanelProvider
     {
+        public bool isRedeem = false;
+
         public SGSScanDevice()
         {
             InitializeComponent();
@@ -43,20 +45,52 @@ namespace SGSPos.Pages
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            Service.SGSAPI.GetBatchResponse response = await Service.SGSAPI.GetBatch(textBox1.Text);
-
-            List<Service.SGSAPI.GetTicketResponse> tickets = new List<Service.SGSAPI.GetTicketResponse>();
-
-            foreach(string ticket in response.ticketids)
+            if (isRedeem)
             {
-                Service.SGSAPI.GetTicketResponse ticketResponse = await Service.SGSAPI.GetTicket(ticket);
-                tickets.Add(ticketResponse);
-            }
+                Service.SGSAPI.GetTicketResponse response = await Service.SGSAPI.GetTicket(textBox1.Text);
 
-            SGSTicketOrder order = new SGSTicketOrder();
-            order.ticketsToUse = tickets;
-            order.Batch = textBox1.Text;
-            Switch(order as IPanelProvider);
+                SGSRedeem redeem = new SGSRedeem();
+
+                try
+                {
+                    redeem.ticketID = response.ticket.ticketid;
+                    redeem.winnings = response.ticket.winamount.ToString("C");
+                    redeem.date = response.ticket.purchaseDate;
+                    redeem.terminalID = "123";
+                    redeem.game = response.ticket.gameid;
+                    redeem.status = response.ticket.status.ToUpper();
+                    redeem.topLeft = "Ticket Found";
+                }
+                catch
+                {
+                    redeem.topLeft = "Unable to find ticket \'" + textBox1.Text + "\'";
+                    redeem.ticketID = "N/A";
+                    redeem.winnings = "N/A";
+                    redeem.date = "N/A";
+                    redeem.terminalID = "N/A";
+                    redeem.game = "N/A";
+                    redeem.status = "INVALID TICKET";
+                }
+
+                Switch(redeem as IPanelProvider);
+            }
+            else
+            {
+                Service.SGSAPI.GetBatchResponse response = await Service.SGSAPI.GetBatch(textBox1.Text);
+
+                List<Service.SGSAPI.GetTicketResponse> tickets = new List<Service.SGSAPI.GetTicketResponse>();
+
+                foreach (string ticket in response.ticketids)
+                {
+                    Service.SGSAPI.GetTicketResponse ticketResponse = await Service.SGSAPI.GetTicket(ticket);
+                    tickets.Add(ticketResponse);
+                }
+
+                SGSTicketOrder order = new SGSTicketOrder();
+                order.ticketsToUse = tickets;
+                order.Batch = textBox1.Text;
+                Switch(order as IPanelProvider);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

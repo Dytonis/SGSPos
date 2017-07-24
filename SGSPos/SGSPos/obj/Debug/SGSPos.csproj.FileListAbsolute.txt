@@ -13,3 +13,8 @@ C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSS
 C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Partial.TicketOrderLine.resources
 C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\Newtonsoft.Json.dll
 C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\Newtonsoft.Json.xml
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\AxInterop.POSPRINTERLib.dll
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\e3kdrv.dll
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\e3kdrv.pdb
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Popups.PopupChoosePrintAction.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSRedeem.resources

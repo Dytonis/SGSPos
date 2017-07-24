@@ -34,5 +34,13 @@ namespace SGSPos.Pages
         {
             Switch(new SGSScanDevice());
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SGSScanDevice scan = new SGSScanDevice();
+            scan.isRedeem = true;
+
+            Switch(scan as IPanelProvider);
+        }
     }
 }
