@@ -9,6 +9,7 @@ using System.IO;
 using System.Net.Http;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using e3kdrv;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
@@ -19,21 +20,33 @@ namespace SGSPos.Service
     {
         public static string baseURI = "http://dev-tribal-api.shoutz.com/";
 
-        public async static Task GetTicketImage(string ticketID) //TEMPORARY I HOPE
+        public async static Task GetTicketImage(string ticketID)
         {
             WebClient wc = new WebClient();
-            byte[] data = wc.DownloadData(new Uri("http://dev-tribal-api.shoutz.com/getticketimg2.php?ticketid=" + ticketID + "&size=mdpi"));
+            byte[] data = await wc.DownloadDataTaskAsync(new Uri("https://oiga-tickets.shoutz.com/api/v1/tickets/get/imagePrint/?ticketid=" + ticketID));
             MemoryStream memstream = new MemoryStream(data);
+
+            if(memstream.Length < 100)
+            {
+                MessageBox.Show("Could not get image for ticket " + ticketID, "Error", MessageBoxButtons.OK);
+                return;
+            }
+
             Image img = Image.FromStream(memstream);
-            Bitmap bmp = ResizeImage(img, img.Width / 5, img.Height / 5);
+            float aspect = (float)img.Height / (float)img.Width;
+            Bitmap bmp = ResizeImage(img, Configuration.ImagePrintWidth, (int)(Configuration.ImagePrintWidth * aspect));
             bmp = BitmapTo1Bpp(bmp);
             MemoryStream ms = new MemoryStream();
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            bmp.Save("C:\\Users\\tanne\\Desktop\\temp.bmp", ImageFormat.Bmp);
+            bmp.Save(path + "\\temp.bmp", ImageFormat.Bmp);
             //img = resize(img, new System.Drawing.Size(100, 100));
             Epic3000.InitializePrinter();
-            Epic3000.DrawImage("C:\\Users\\tanne\\Desktop\\temp.bmp");
-            Epic3000.LineFeed(15);
+            Epic3000.SetCenterJustify();
+            Epic3000.AppendBufferRaw(new byte[] { 27, 64, 27, 116, 0 });
+            Epic3000.DrawImage(path + "\\temp.bmp");
+            Epic3000.AppendBufferRaw(new byte[] { 13, 12 });
+            Epic3000.LineFeed(5);
             Epic3000.CutPaper();
             Epic3000.SendBufferAndClear();
         }
@@ -44,7 +57,8 @@ namespace SGSPos.Service
             //byte[] data = wc.DownloadData(new Uri("http://dev-tribal-api.shoutz.com/getticketimg2.php?ticketid=" + ticketID));
             System.IO.FileStream data = new System.IO.FileStream(imagePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             Image img = Image.FromStream(data);
-            Bitmap bmp = ResizeImage(img, (int)((float)img.Width / 1.05f), (int)((float)img.Height / 1.05f));
+            float aspect = (float)img.Height / (float)img.Width;
+            Bitmap bmp = ResizeImage(img, Configuration.ImagePrintWidth, (int)(Configuration.ImagePrintWidth * aspect));
             bmp = BitmapTo1Bpp(bmp);
             MemoryStream ms = new MemoryStream();
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

@@ -64,6 +64,7 @@
     <Compile Include="Application.Designer.cs">
       <DependentUpon>Application.cs</DependentUpon>
     </Compile>
+    <Compile Include="Configuration.cs" />
     <Compile Include="Pages\ApplicationPageSwitch.cs">
       <SubType>Form</SubType>
     </Compile>

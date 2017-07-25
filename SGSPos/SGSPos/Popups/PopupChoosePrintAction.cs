@@ -24,15 +24,28 @@ namespace SGSPos.Popups
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            //foreach(string s in ticketIds)
-            //{
-            //    await Service.SGSAPI.GetTicketImage();
-            //}
-
-            if (ticketIds.Length <= 0)
-                await Demo(1);
+            if (Configuration.UseDemoProcedure == false)
+            {
+                foreach (string s in ticketIds)
+                {
+                    try
+                    {
+                        await Service.SGSAPI.GetTicketImage(s);
+                    }
+                    catch(Exception error)
+                    {
+                        this.Close();
+                        //MessageBox.Show("Something went wrong! " + error.Message, "Error", MessageBoxButtons.OK);
+                    }
+                }
+            }
             else
-                await Demo(ticketIds.Length);
+            {
+                if (ticketIds.Length <= 0)
+                    await Demo(1);
+                else
+                    await Demo(ticketIds.Length);
+            }
 
             PanelParent.Switch(new Pages.SGSHome());
             Close();

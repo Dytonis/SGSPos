@@ -57,9 +57,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
             this.label1.Location = new System.Drawing.Point(12, 746);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 13);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "SGSPOS - V1.7.72417";
+            this.label1.Text = "BETA - Build 1b";
             // 
             // pictureBox1
             // 
