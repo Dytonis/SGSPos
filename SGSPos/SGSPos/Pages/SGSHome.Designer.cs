@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SGSHome));
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new SGSPos.SGSSwitchPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -57,9 +57,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
             this.label1.Location = new System.Drawing.Point(12, 746);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.Size = new System.Drawing.Size(136, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "BETA - Build 1b";
+            this.label1.Text = "BETA - Version 0.21.82217";
             // 
             // pictureBox1
             // 
@@ -81,7 +81,7 @@
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.button2.Location = new System.Drawing.Point(690, 354);
+            this.button2.Location = new System.Drawing.Point(717, 355);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(209, 65);
             this.button2.TabIndex = 1;
@@ -97,7 +97,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.button1.Location = new System.Drawing.Point(404, 354);
+            this.button1.Location = new System.Drawing.Point(431, 355);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(209, 65);
             this.button1.TabIndex = 0;
@@ -123,7 +123,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private SGSSwitchPanel panel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.PictureBox pictureBox1;

@@ -14,12 +14,13 @@ namespace SGSPos.Pages
     {
         public bool isRedeem = false;
 
-        public SGSScanDevice()
+        public SGSScanDevice(bool isRedeem = false)
         {
+            this.isRedeem = isRedeem;
             InitializeComponent();
         }
 
-        public Panel PanelToSwitch
+        public SGSSwitchPanel PanelToSwitch
         {
             get
             {
@@ -31,8 +32,8 @@ namespace SGSPos.Pages
         {
             //throw new NotImplementedException();
 
-            textBox1.Select();
             textBox1.KeyPress += TextBox1_KeyPress;
+            textBox1.Select();
         }
 
         private void TextBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -57,7 +58,8 @@ namespace SGSPos.Pages
                     redeem.winnings = response.ticket.winamount.ToString("C");
                     redeem.date = response.ticket.purchaseDate;
                     redeem.terminalID = "123";
-                    redeem.game = response.ticket.gameid;
+                    redeem.game = response.ticket.gamename;
+                    redeem.gameID = response.ticket.gameid;
                     redeem.status = response.ticket.status.ToUpper();
                     redeem.topLeft = "Ticket Found";
                 }
@@ -96,6 +98,11 @@ namespace SGSPos.Pages
         private void button1_Click(object sender, EventArgs e)
         {
             Switch(new SGSHome());
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            textBox1.Text.Replace("Please Scan or Enter Purchase Code", "");
         }
     }
 }

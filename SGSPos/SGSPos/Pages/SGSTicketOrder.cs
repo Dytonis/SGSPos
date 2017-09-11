@@ -21,7 +21,7 @@ namespace SGSPos.Pages
             InitializeComponent();
         }
 
-        public Panel PanelToSwitch
+        public SGSSwitchPanel PanelToSwitch
         {
             get
             {
@@ -56,7 +56,6 @@ namespace SGSPos.Pages
             {
                 int index = 1;
                 tableLayoutPanel1.RowCount = 1 + ticketsToUse.Count;
-                tableLayoutPanel1.RowStyles[index].Height = 38;
                 tableLayoutPanel1.Height = (38 * ticketsToUse.Count) + 38;
                 try
                 {
@@ -68,10 +67,14 @@ namespace SGSPos.Pages
                 }
                 foreach (Service.SGSAPI.GetTicketResponse ticket in ticketsToUse)
                 {
+                    tableLayoutPanel1.RowStyles[index].Height = 38;
                     Partial.TicketOrderLine ticketLine = new Partial.TicketOrderLine();
                     ticketLine.TicketIDLabel.Text = ticket.ticket.ticketid;
-                    ticketLine.TicketGameLabel.Text = ticket.ticket.gameid;
-                    ticketLine.TicketNumbersLabel.Text = ticket.ticket.numbers;
+                    ticketLine.TicketGameLabel.Text = ticket.ticket.gamename;
+                    if (String.IsNullOrWhiteSpace(ticket.ticket.numbers))
+                        ticketLine.TicketNumbersLabel.Text = "N/A";
+                    else
+                        ticketLine.TicketNumbersLabel.Text = ticket.ticket.numbers;
 
                     ticketLine.TicketIDLabel.ForeColor = Color.GhostWhite;
                     ticketLine.TicketNumbersLabel.ForeColor = Color.GhostWhite;

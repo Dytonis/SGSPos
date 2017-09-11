@@ -17,7 +17,7 @@ namespace SGSPos.Pages
             InitializeComponent();
         }
 
-        public Panel PanelToSwitch
+        public SGSSwitchPanel PanelToSwitch
         {
             get
             {
@@ -32,6 +32,8 @@ namespace SGSPos.Pages
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Switch(new SGSScanDevice());
+            Switch(new SGSScanDevice());
             Switch(new SGSScanDevice());
         }
 

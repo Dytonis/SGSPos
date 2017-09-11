@@ -4,7 +4,7 @@ namespace SGSPos.Pages
 {
     public interface IPanelProvider
     {
-        Panel PanelToSwitch { get; }
+        SGSSwitchPanel PanelToSwitch { get; }
 
         void OnPageLoad();
     }

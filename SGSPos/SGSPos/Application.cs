@@ -1,10 +1,21 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace SGSPos
 {
     public partial class Application : Pages.Page
     {
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle = cp.ExStyle | 0x2000000;
+                return cp;
+            }
+        }
+
         public Application()
         {
             InitializeComponent();

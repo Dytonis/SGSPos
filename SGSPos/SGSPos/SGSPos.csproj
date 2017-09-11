@@ -65,6 +65,9 @@
       <DependentUpon>Application.cs</DependentUpon>
     </Compile>
     <Compile Include="Configuration.cs" />
+    <Compile Include="DBPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Pages\ApplicationPageSwitch.cs">
       <SubType>Form</SubType>
     </Compile>

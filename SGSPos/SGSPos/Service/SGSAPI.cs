@@ -18,15 +18,15 @@ namespace SGSPos.Service
 {
     public class SGSAPI
     {
-        public static string baseURI = "http://dev-tribal-api.shoutz.com/";
+        public static string baseURI = "https://eps-api-2.shoutz.com/";
 
         public async static Task GetTicketImage(string ticketID)
         {
             WebClient wc = new WebClient();
-            byte[] data = await wc.DownloadDataTaskAsync(new Uri("https://oiga-tickets.shoutz.com/api/v1/tickets/get/imagePrint/?ticketid=" + ticketID));
+            byte[] data = await wc.DownloadDataTaskAsync(new Uri(baseURI + "api/games/getUserTicketPrintForPOS?ticketid=" + ticketID));
             MemoryStream memstream = new MemoryStream(data);
 
-            if(memstream.Length < 100)
+            if (memstream.Length < 100)
             {
                 MessageBox.Show("Could not get image for ticket " + ticketID, "Error", MessageBoxButtons.OK);
                 return;
@@ -80,7 +80,7 @@ namespace SGSPos.Service
         {
             List<byte> list = new List<byte>();
 
-            for(int i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
                 list.Add((byte)(r.Next() % 256));
             }
@@ -97,7 +97,7 @@ namespace SGSPos.Service
                 filesList.Add(@"C:/SGSDemo/SGS" + i + ".png");
             }
 
-            for(int i = sequence, t = 0; t < tickets; i++, t++)
+            for (int i = sequence, t = 0; t < tickets; i++, t++)
             {
                 if (i > ticketsTotal - 1)
                     i = 0;
@@ -154,40 +154,83 @@ namespace SGSPos.Service
 
         public async static Task<GetBatchResponse> GetBatch(string batchID)
         {
-            string api = baseURI + "api/v1/tickets/getbatch?batchid=" + batchID;
+            string api = baseURI + "api/ticket/posGetTicketBatch?batchid=" + batchID;
 
             //try
             //{
-                using (var httpClient = new HttpClient())
+            using (var httpClient = new HttpClient())
+            {
+                //try
+                //{
+                var httpResponse = await httpClient.GetAsync(api);
+                if (httpResponse.Content != null)
                 {
-                    //try
-                    //{
-                        var httpResponse = await httpClient.GetAsync(api);
-                        if (httpResponse.Content != null)
-                        {
-                            string responseContent = await httpResponse.Content.ReadAsStringAsync();
-                            GetBatchResponse response = JsonConvert.DeserializeObject<GetBatchResponse>(responseContent);
-                            return response;
-                        }
-                        else
-                        {
-                            throw new Exception();
-                        }
-                    //}
-                    //catch
-                    //{
-                    //    throw;
-                    //}
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    GetBatchResponse response = JsonConvert.DeserializeObject<GetBatchResponse>(responseContent);
+                    return response;
                 }
+                else
+                {
+                    throw new Exception();
+                }
+                //}
+                //catch
+                //{
+                //    throw;
+                //}
+            }
             //}
             //catch
             //{
             //    throw;
             //}
         }
+
+        public async static Task<Meta> RedeemTicket(string ticketID, string agentID, string terminalID)
+        {
+            string api = baseURI + "api/v1/tickets/getbatch?batchid=" + ticketID;
+
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    try
+                    {
+                        RedeemRequest request = new RedeemRequest()
+                        {
+                            agentid = agentID,
+                            terminalid = terminalID,
+                            ticketid = ticketID
+                        };
+
+                        HttpContent content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                        var httpResponse = await httpClient.PostAsync(api, content);
+                        if (httpResponse.Content != null)
+                        {
+                            string responseContent = await httpResponse.Content.ReadAsStringAsync();
+                            Meta response = JsonConvert.DeserializeObject<Meta>(responseContent);
+                            return response;
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async static Task<GetTicketResponse> GetTicket(string TicketID)
         {
-            string api = baseURI + "api/v1/tickets/get?ticketid=" + TicketID;
+            string api = baseURI + "api/ticket/posGetTicket?ticketid=" + TicketID;
 
             try
             {
@@ -219,13 +262,20 @@ namespace SGSPos.Service
             }
         }
 
+        public class RedeemRequest
+        {
+            public string ticketid;
+            public string agentid;
+            public string terminalid;
+        }
+
         public class GetBatchResponse
         {
             public Meta meta;
 
             public decimal totalPrice;
             public int totalTickets;
-            public string[] ticketids;          
+            public string[] ticketids;
         }
 
         public class GetTicketResponse
@@ -237,6 +287,7 @@ namespace SGSPos.Service
             {
                 public string ticketid { get; set; }
                 public string gameid { get; set; }
+                public string gamename { get; set; }
                 public string status { get; set; }
                 public string betamount { get; set; }
                 public string numbers { get; set; }

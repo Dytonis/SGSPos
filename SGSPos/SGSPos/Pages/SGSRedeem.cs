@@ -18,6 +18,7 @@ namespace SGSPos.Pages
         public string terminalID;
         public string date;
         public string game;
+        public string gameID;
         public string topLeft;
 
         public string status;
@@ -27,7 +28,7 @@ namespace SGSPos.Pages
             InitializeComponent();
         }
 
-        public Panel PanelToSwitch
+        public SGSSwitchPanel PanelToSwitch
         {
             get
             {
@@ -38,7 +39,7 @@ namespace SGSPos.Pages
         public void OnPageLoad()
         {
             label13.Text = ticketID;
-            label12.Text = game;
+            label12.Text = game + " [id: " + gameID + "]";
             label11.Text = winnings;
             label10.Text = date;
             label1.Text = terminalID;
@@ -54,11 +55,15 @@ namespace SGSPos.Pages
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Switch(new SGSHome());
+            SGSScanDevice device = new SGSScanDevice();
+            device.isRedeem = true;
+            Switch(device);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
+            await Service.SGSAPI.RedeemTicket(ticketID, "test", "123");
+
             Switch(new SGSHome());
         }
     }
