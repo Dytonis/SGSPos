@@ -46,8 +46,9 @@ namespace SGSPos.Service
             Epic3000.AppendBufferRaw(new byte[] { 27, 64, 27, 116, 0 });
             Epic3000.DrawImage(path + "\\temp.bmp");
             Epic3000.AppendBufferRaw(new byte[] { 13, 12 });
-            Epic3000.LineFeed(5);
+            Epic3000.LineFeed(8);
             Epic3000.CutPaper();
+            Epic3000.LineFeed(3);
             Epic3000.SendBufferAndClear();
         }
 
@@ -292,7 +293,7 @@ namespace SGSPos.Service
                 public string betamount { get; set; }
                 public string numbers { get; set; }
                 public string winningnumbers { get; set; }
-                public decimal winamount { get; set; }
+                //public decimal winamount { get; set; }
                 public string createDate { get; set; }
                 public string purchaseDate { get; set; }
                 public string redemptionDate { get; set; }

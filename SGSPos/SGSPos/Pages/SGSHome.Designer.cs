@@ -57,9 +57,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
             this.label1.Location = new System.Drawing.Point(12, 746);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 13);
+            this.label1.Size = new System.Drawing.Size(130, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "BETA - Version 0.21.82217";
+            this.label1.Text = "BETA - Version 0.3.92617";
             // 
             // pictureBox1
             // 

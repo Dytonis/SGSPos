@@ -55,7 +55,10 @@ namespace SGSPos.Pages
                 try
                 {
                     redeem.ticketID = response.ticket.ticketid;
-                    redeem.winnings = response.ticket.winamount.ToString("C");
+                    //if (redeem.winnings != null)
+                    //{
+                        //redeem.winnings = (decimal)(response.ticket.winamount).ToString("C");
+                    //}
                     redeem.date = response.ticket.purchaseDate;
                     redeem.terminalID = "123";
                     redeem.game = response.ticket.gamename;
@@ -78,18 +81,18 @@ namespace SGSPos.Pages
             }
             else
             {
-                Service.SGSAPI.GetBatchResponse response = await Service.SGSAPI.GetBatch(textBox1.Text);
+                Service.SGSAPI2.GetBatchForPaymentResponse response = await Service.SGSAPI2.GetBatchForPayment(textBox1.Text);
 
-                List<Service.SGSAPI.GetTicketResponse> tickets = new List<Service.SGSAPI.GetTicketResponse>();
+               /* List<Service.SGSAPI.GetTicketResponse> tickets = new List<Service.SGSAPI.GetTicketResponse>();
 
                 foreach (string ticket in response.ticketids)
                 {
                     Service.SGSAPI.GetTicketResponse ticketResponse = await Service.SGSAPI.GetTicket(ticket);
                     tickets.Add(ticketResponse);
-                }
+                }*/
 
                 SGSTicketOrder order = new SGSTicketOrder();
-                order.ticketsToUse = tickets;
+                //order.ticketsToUse = tickets;
                 order.Batch = textBox1.Text;
                 Switch(order as IPanelProvider);
             }

@@ -35,7 +35,7 @@ namespace SGSPos.Popups
                     catch(Exception error)
                     {
                         this.Close();
-                        //MessageBox.Show("Something went wrong! " + error.Message, "Error", MessageBoxButtons.OK);
+                        MessageBox.Show("Something went wrong! " + error.Message, "Error", MessageBoxButtons.OK);
                     }
                 }
             }

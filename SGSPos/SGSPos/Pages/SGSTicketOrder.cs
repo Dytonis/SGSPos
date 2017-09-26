@@ -31,6 +31,13 @@ namespace SGSPos.Pages
 
         public void OnPageLoad()
         {
+            button3.Enabled = false;
+            label1.Text = Batch;
+            label2.Text = "Collect: Complete order to get total.";
+        }
+
+        public void RenderTable()
+        {
             Partial.TicketOrderLine ticketOrderLine = new Partial.TicketOrderLine();
             ticketOrderLine.TicketIDLabel.Text = "Ticket ID";
             ticketOrderLine.TicketNumbersLabel.Text = "Numbers";
@@ -110,7 +117,35 @@ namespace SGSPos.Pages
             Switch(new SGSHome());
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            await Service.SGSAPI2.PosMarkPaid(Batch);
+            Service.SGSAPI2.GetTicketBatchPrintingResponse response = await Service.SGSAPI2.GetTicketBatchPrinting(Batch);
+
+            ticketsToUse = new List<Service.SGSAPI.GetTicketResponse>();
+
+            foreach (string ticket in response.ticketids)
+            {
+                Service.SGSAPI.GetTicketResponse ticketResponse = await Service.SGSAPI.GetTicket(ticket);
+                ticketResponse.ticket.ticketid = ticket;
+                ticketsToUse.Add(ticketResponse);
+            }
+
+            if (ticketsToUse.Count > 0)
+            {
+                RenderTable();
+                button3.Enabled = true;
+            }
+            else
+            {
+                button3.Enabled = false;
+            }
+            //Popups.PopupChoosePrintAction popup = new Popups.PopupChoosePrintAction(this);
+            //popup.ticketIds = ticketIdsToUse.ToArray();
+            //popup.Pop(this, popup);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
             Popups.PopupChoosePrintAction popup = new Popups.PopupChoosePrintAction(this);
             popup.ticketIds = ticketIdsToUse.ToArray();
