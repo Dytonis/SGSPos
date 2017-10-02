@@ -126,13 +126,13 @@ namespace SGSPos.Service
             }
         }
 
-        public async static Task<MarkRedeemedResponse> MarkRedeemed(string batchid, RedeemRequest request)
+        public async static Task<MarkRedeemedResponse> MarkRedeemed(string batchid)
         {
             string api = baseURI + "api/cart/posMarkRedeemed?batchid=" + batchid;
 
             try
             {
-                return await GenericPost<MarkRedeemedResponse, RedeemRequest>(api, request);
+                return await GenericGet<MarkRedeemedResponse>(api);
             }
             catch
             {
@@ -151,6 +151,13 @@ namespace SGSPos.Service
         {
             public bool success;
             public string apiEnvType;
+            public ErrorResponse error;
+        }
+
+        public class ErrorResponse
+        {
+            public string message;
+            public int code;
         }
 
         public class MarkRedeemedResponse : posApiResponse
@@ -168,7 +175,7 @@ namespace SGSPos.Service
             public decimal totalPrice;
             public Meta meta;
             public int totalTickets;
-            public string[] ticketids;
+            public Ticket[] tickets;
             public User user;
         }
 
@@ -185,9 +192,54 @@ namespace SGSPos.Service
             public string userMessage { get; set; }
             public string userId { get; set; }
         }
+
         public class User
         {
             public string tempid { get; set; }
+        }
+
+        public class Ticket
+        {
+            public string id { get; set; }
+            public string gamename { get; set; }
+            public decimal cost { get; set; }
+            public bool win { get; set; }
+            public string[] winningPicks { get; set; }
+            public string[] userPicks { get; set; }
+
+            public string getWinningNumbers(string delineation)
+            {
+                string result = "";
+
+                if (winningPicks == null)
+                    return "No Data.";
+                else if (winningPicks.Length == 0)
+                    return "No Data.";
+
+                for (int i = 0; i < winningPicks.Length - 1; i++)
+                    result += winningPicks[i] + delineation;
+
+                result += winningPicks[winningPicks.Length - 1];
+
+                return result;
+            }
+
+            public string getUserNumbers(string delineation)
+            {
+                string result = "";
+
+                if (userPicks == null)
+                    return "No Data.";
+                else if (userPicks.Length == 0)
+                    return "No Data.";
+
+                for (int i = 0; i < userPicks.Length - 1; i++)
+                    result += userPicks[i] + delineation;
+
+                result += userPicks[userPicks.Length - 1];
+
+                return result;
+            }
         }
     }
 }

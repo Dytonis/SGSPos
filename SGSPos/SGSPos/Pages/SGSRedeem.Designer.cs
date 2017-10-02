@@ -145,9 +145,9 @@
             this.label9.ForeColor = System.Drawing.Color.Gold;
             this.label9.Location = new System.Drawing.Point(18, 312);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(174, 29);
+            this.label9.Size = new System.Drawing.Size(153, 29);
             this.label9.TabIndex = 14;
-            this.label9.Text = "TERMINAL ID";
+            this.label9.Text = "MESSAGAE";
             // 
             // label8
             // 
@@ -157,9 +157,9 @@
             this.label8.ForeColor = System.Drawing.Color.Gold;
             this.label8.Location = new System.Drawing.Point(18, 266);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(245, 29);
+            this.label8.Size = new System.Drawing.Size(155, 29);
             this.label8.TabIndex = 13;
-            this.label8.Text = "DATE PURCHASED";
+            this.label8.Text = "TICKET IDS";
             // 
             // label7
             // 
@@ -169,9 +169,9 @@
             this.label7.ForeColor = System.Drawing.Color.Gold;
             this.label7.Location = new System.Drawing.Point(18, 218);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(143, 29);
+            this.label7.Size = new System.Drawing.Size(205, 29);
             this.label7.TabIndex = 12;
-            this.label7.Text = "WINNINGS";
+            this.label7.Text = "TICKET COUNT";
             // 
             // label5
             // 
@@ -181,9 +181,9 @@
             this.label5.ForeColor = System.Drawing.Color.Gold;
             this.label5.Location = new System.Drawing.Point(18, 124);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(138, 29);
+            this.label5.Size = new System.Drawing.Size(131, 29);
             this.label5.TabIndex = 11;
-            this.label5.Text = "TICKET ID";
+            this.label5.Text = "BATCH ID";
             // 
             // label6
             // 
@@ -193,9 +193,9 @@
             this.label6.ForeColor = System.Drawing.Color.Gold;
             this.label6.Location = new System.Drawing.Point(18, 169);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(86, 29);
+            this.label6.Size = new System.Drawing.Size(236, 29);
             this.label6.TabIndex = 10;
-            this.label6.Text = "GAME";
+            this.label6.Text = "PURCHASE PRICE";
             // 
             // pictureBox2
             // 
@@ -276,7 +276,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(197, 79);
             this.button2.TabIndex = 1;
-            this.button2.Text = "MARK PAID";
+            this.button2.Text = "MARK REDEEMED";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 

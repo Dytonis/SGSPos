@@ -12,9 +12,10 @@ namespace SGSPos.Pages
 {
     public partial class SGSTicketOrder : Page, IPanelProvider
     {
-        public List<Service.SGSAPI.GetTicketResponse> ticketsToUse;
+        public Service.SGSAPI2.Ticket[] ticketsToUse;
         public List<string> ticketIdsToUse = new List<string>();
         public string Batch;
+        public string price;
 
         public SGSTicketOrder()
         {
@@ -33,7 +34,11 @@ namespace SGSPos.Pages
         {
             button3.Enabled = false;
             label1.Text = Batch;
-            label2.Text = "Collect: Complete order to get total.";
+            if(String.IsNullOrWhiteSpace(price))
+            {
+                label2.Text = "Collect: No Data";
+            }
+            label2.Text = "Collect " + price;
         }
 
         public void RenderTable()
@@ -62,40 +67,46 @@ namespace SGSPos.Pages
             if (ticketsToUse != null)
             {
                 int index = 1;
-                tableLayoutPanel1.RowCount = 1 + ticketsToUse.Count;
-                tableLayoutPanel1.Height = (38 * ticketsToUse.Count) + 38;
+                tableLayoutPanel1.RowCount = 1 + ticketsToUse.Length;
                 try
                 {
-                    label2.Text = "Collect " + Convert.ToDecimal(ticketsToUse.Sum(x => Convert.ToDecimal(x.ticket.betamount))).ToString("C");
+                    label2.Text = "Collect " + Convert.ToDecimal(ticketsToUse.Sum(x => Convert.ToDecimal(x.cost))).ToString("C");
                 }
                 catch
                 {
                     label2.Text = "Collect $" + "error on conversion";
                 }
-                foreach (Service.SGSAPI.GetTicketResponse ticket in ticketsToUse)
+                int rowDifference = tableLayoutPanel1.RowCount - tableLayoutPanel1.RowStyles.Count;
+                if(rowDifference > 0)
+                {
+                    for (int i = 0; i < rowDifference; i++)
+                        tableLayoutPanel1.RowStyles.Add(new RowStyle() { Height = 38 });
+                }
+                tableLayoutPanel1.Height = (38 * ticketsToUse.Length) + 38;
+                foreach (Service.SGSAPI2.Ticket ticket in ticketsToUse)
                 {
                     tableLayoutPanel1.RowStyles[index].Height = 38;
                     Partial.TicketOrderLine ticketLine = new Partial.TicketOrderLine();
-                    ticketLine.TicketIDLabel.Text = ticket.ticket.ticketid;
-                    ticketLine.TicketGameLabel.Text = ticket.ticket.gamename;
-                    if (String.IsNullOrWhiteSpace(ticket.ticket.numbers))
+                    ticketLine.TicketIDLabel.Text = ticket.id;
+                    ticketLine.TicketGameLabel.Text = ticket.gamename;
+                    if (String.IsNullOrWhiteSpace(ticket.getUserNumbers("-")))
                         ticketLine.TicketNumbersLabel.Text = "N/A";
                     else
-                        ticketLine.TicketNumbersLabel.Text = ticket.ticket.numbers;
+                        ticketLine.TicketNumbersLabel.Text = ticket.getUserNumbers("-");
 
                     ticketLine.TicketIDLabel.ForeColor = Color.GhostWhite;
                     ticketLine.TicketNumbersLabel.ForeColor = Color.GhostWhite;
                     ticketLine.TicketGameLabel.ForeColor = Color.GhostWhite;
                     ticketLine.TicketPriceLabel.ForeColor = Color.GhostWhite;
 
-                    ticketIdsToUse.Add(ticket.ticket.ticketid);
+                    ticketIdsToUse.Add(ticket.id);
                     try
                     {
-                        ticketLine.TicketPriceLabel.Text = Convert.ToDecimal(ticket.ticket.betamount).ToString("C");
+                        ticketLine.TicketPriceLabel.Text = Convert.ToDecimal(ticket.cost).ToString("C");
                     }
                     catch
                     {
-                        ticketLine.TicketPriceLabel.Text = ticket.ticket.betamount;
+                        ticketLine.TicketPriceLabel.Text = ticket.cost.ToString();
                     }
                     tableLayoutPanel1.Controls.Add(ticketLine.TicketIDLabel, 0, index);
                     tableLayoutPanel1.Controls.Add(ticketLine.TicketGameLabel, 1, index);
@@ -119,19 +130,27 @@ namespace SGSPos.Pages
 
         private async void button2_Click(object sender, EventArgs e)
         {
+            button2.Enabled = false;
             await Service.SGSAPI2.PosMarkPaid(Batch);
             Service.SGSAPI2.GetTicketBatchPrintingResponse response = await Service.SGSAPI2.GetTicketBatchPrinting(Batch);
 
-            ticketsToUse = new List<Service.SGSAPI.GetTicketResponse>();
+            ticketsToUse = response.tickets;
 
-            foreach (string ticket in response.ticketids)
+            if(response.success == false)
             {
-                Service.SGSAPI.GetTicketResponse ticketResponse = await Service.SGSAPI.GetTicket(ticket);
-                ticketResponse.ticket.ticketid = ticket;
-                ticketsToUse.Add(ticketResponse);
+                MessageBox.Show(response.error.message, "Error handled!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                button2.Enabled = true;
+                return;
             }
 
-            if (ticketsToUse.Count > 0)
+            if(response.tickets == null)
+            {
+                MessageBox.Show("This batch has no tickets!", "Error handled!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                button2.Enabled = true;
+                return;
+            }
+
+            if (ticketsToUse.Length > 0)
             {
                 RenderTable();
                 button3.Enabled = true;

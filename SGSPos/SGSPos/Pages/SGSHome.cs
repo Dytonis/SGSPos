@@ -44,5 +44,11 @@ namespace SGSPos.Pages
 
             Switch(scan as IPanelProvider);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Would you like to close this application?", "SGS Pos", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
+                System.Windows.Forms.Application.Exit();
+        }
     }
 }

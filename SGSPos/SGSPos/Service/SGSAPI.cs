@@ -187,6 +187,7 @@ namespace SGSPos.Service
             //}
         }
 
+        [Obsolete]
         public async static Task<Meta> RedeemTicket(string ticketID, string agentID, string terminalID)
         {
             string api = baseURI + "api/v1/tickets/getbatch?batchid=" + ticketID;
