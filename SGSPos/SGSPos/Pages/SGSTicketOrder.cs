@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using apgcashdrv;
 
 namespace SGSPos.Pages
 {
@@ -164,7 +165,34 @@ namespace SGSPos.Pages
             //popup.Pop(this, popup);
         }
 
+        private Popups.PopupTellCashDrawer drawer;
+
         private void button3_Click(object sender, EventArgs e)
+        {
+            if (Configuration.UseCashDrawer)
+            {
+                CashDrawer.InitializeDrawer();
+                CashDrawer.CashDrawerEvent += CashDrawer_CashDrawerEvent;
+                CashDrawer.OpenDrawer();
+                drawer = new Popups.PopupTellCashDrawer(this, () => { ChoosePrint(); });
+                Pop(this, drawer);
+            }
+            else
+            {
+                ChoosePrint();
+            }
+        }
+
+        private void CashDrawer_CashDrawerEvent(object sender, CashDrawerEventArgs e)
+        {
+            if(e.isOpen == false)
+            {
+                drawer.Close();
+                ChoosePrint();
+            }
+        }
+
+        private void ChoosePrint()
         {
             Popups.PopupChoosePrintAction popup = new Popups.PopupChoosePrintAction(this);
             popup.ticketIds = ticketIdsToUse.ToArray();

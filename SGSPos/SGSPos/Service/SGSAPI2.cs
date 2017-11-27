@@ -18,7 +18,8 @@ namespace SGSPos.Service
 {
     public class SGSAPI2
     {
-        public static string baseURI = "https://eps-api-2.shoutz.com/";
+        public static string baseURI = "http://pp-conf-api2.shoutz.com/";
+        //public static string baseURI = "https://eps-api-2.shoutz.com/";
 
         public async static Task<T> GenericGet<T>(string api)
         {
@@ -172,6 +173,7 @@ namespace SGSPos.Service
 
         public class GetTicketBatchPrintingResponse : posApiResponse
         {
+            public decimal totalWinAmount;
             public decimal totalPrice;
             public Meta meta;
             public int totalTickets;
@@ -181,9 +183,9 @@ namespace SGSPos.Service
 
         public class GetBatchForPaymentResponse : posApiResponse
         {
-            public decimal totalPrice;
             public Meta meta;
             public int totalTickets;
+            public decimal totalPrice { get; set; }
         }
 
         public class Meta

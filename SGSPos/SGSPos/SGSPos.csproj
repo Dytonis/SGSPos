@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="apgcashdrv">
+      <HintPath>..\..\..\Epic3000Test\Epic3000Test\apgcashdrv\bin\Debug\apgcashdrv.dll</HintPath>
+    </Reference>
     <Reference Include="AxInterop.POSPRINTERLib">
       <HintPath>..\..\..\Epic3000Test\Epic3000Test\e3kdrv\AxInterop.POSPRINTERLib.dll</HintPath>
     </Reference>
@@ -75,6 +78,12 @@
     <Compile Include="Pages\Page.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Pages\SGSLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pages\SGSLogin.Designer.cs">
+      <DependentUpon>SGSLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SGSRedeem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +117,24 @@
     <Compile Include="Popups\Popup.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Popups\PopupChooseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popups\PopupChooseForm.Designer.cs">
+      <DependentUpon>PopupChooseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\PopupWaiting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popups\PopupWaiting.Designer.cs">
+      <DependentUpon>PopupWaiting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\PopupTellCashDrawer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popups\PopupTellCashDrawer.Designer.cs">
+      <DependentUpon>PopupTellCashDrawer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popups\PopupChoosePrintAction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,10 +143,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CashManagement.cs" />
+    <Compile Include="Service\PermissionGroup.cs" />
     <Compile Include="Service\SGSAPI2.cs" />
     <Compile Include="Service\SGSAPI.cs" />
+    <Compile Include="Service\SGSAPI3.cs" />
+    <Compile Include="Service\Users.cs" />
     <EmbeddedResource Include="Application.resx">
       <DependentUpon>Application.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\SGSLogin.resx">
+      <DependentUpon>SGSLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\SGSRedeem.resx">
       <DependentUpon>SGSRedeem.cs</DependentUpon>
@@ -135,6 +169,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Partial\TicketOrderLine.resx">
       <DependentUpon>TicketOrderLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popups\PopupChooseForm.resx">
+      <DependentUpon>PopupChooseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popups\PopupWaiting.resx">
+      <DependentUpon>PopupWaiting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popups\PopupTellCashDrawer.resx">
+      <DependentUpon>PopupTellCashDrawer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popups\PopupChoosePrintAction.resx">
       <DependentUpon>PopupChoosePrintAction.cs</DependentUpon>

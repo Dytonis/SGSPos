@@ -65,6 +65,8 @@ namespace SGSPos.Pages
                         //}
 
                         redeem.message = response.meta.userMessage;
+                        redeem.cost = response.totalPrice.ToString("C");
+                        redeem.winnings = response.totalWinAmount.ToString("C");
                         redeem.ticketCount = response.totalTickets.ToString();
                         redeem.ticketIDS = response.tickets.Select(x => x.id).Aggregate((i, j) => i + ", " + j);
                         redeem.status = "Pay ";
@@ -72,13 +74,30 @@ namespace SGSPos.Pages
                     }
                     else
                     {
-                        redeem.topLeft = "There was an error proccessing \'" + textBox1.Text + "\'";
-                        redeem.ticketCount = "N/A";
-                        redeem.winnings = "";
-                        redeem.ticketIDS = "N/A";
-                        redeem.message = response.error.message;
-                        redeem.cost = "N/A";
-                        redeem.status = "There was an error.";
+                        //try ticket redeem instead
+                        Service.SGSAPI.GetTicketResponse ticketResponse = await Service.SGSAPI.GetTicket(textBox1.Text);
+
+                        if (ticketResponse.ticket != null)
+                        {
+                            redeem.topLeft = "Ticket Found";
+                            redeem.message = ticketResponse.meta.userMessage + " However, this operation is currently missing data.";
+                            redeem.cost = ticketResponse.ticket.betamount;
+                            redeem.winnings = "";
+                            redeem.ticketCount = "1";
+                            redeem.ticketIDS = textBox1.Text;
+                            redeem.batch = "Unavailable with current version.";
+                            redeem.status = "Unavailable with current version.";
+                        }
+                        else
+                        {
+                            redeem.topLeft = "There was an error proccessing \'" + textBox1.Text + "\'";
+                            redeem.ticketCount = "N/A";
+                            redeem.winnings = "";
+                            redeem.ticketIDS = "N/A";
+                            redeem.message = response.error.message + " A ticket redeem was carried out and failed.";
+                            redeem.cost = "N/A";
+                            redeem.status = "There was an error.";
+                        }
                     }
                 }
                 catch(Exception error)

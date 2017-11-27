@@ -69,11 +69,21 @@ namespace SGSPos.Pages
         {
             Service.SGSAPI2.MarkRedeemedResponse response = await Service.SGSAPI2.MarkRedeemed(batch);
 
-            if(response.markRedeemedSuccess == true)
+            if (response.markRedeemedSuccess == true)
+            {
+                Pop(this, new Popups.PopupChooseForm(this, (x) =>
+                {
+                    switch(x)
+                    {
+                        default:
+                            break;
+                    }
+                }));
                 Switch(new SGSHome());
+            }
             else
             {
-                while(MessageBox.Show("The redeem process was not successfull for batchid " + batch + ". " + response.error.message, "Error handled!", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) != DialogResult.Cancel)
+                while (MessageBox.Show("The redeem process was not successfull for batchid " + batch + ". " + (response.error == null ? "There was no error data given." : response?.error.message), "Error handled!", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) != DialogResult.Cancel)
                 {
                     Service.SGSAPI2.MarkRedeemedResponse response2 = await Service.SGSAPI2.MarkRedeemed(batch);
 

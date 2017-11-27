@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SGSPos.Pages
 {
-    public partial class SGSHome : Page, IPanelProvider
+    public partial class SGSLogin : Page, IPanelProvider
     {
-        public SGSHome()
+        public SGSLogin()
         {
             InitializeComponent();
         }
@@ -30,11 +30,12 @@ namespace SGSPos.Pages
             //throw new NotImplementedException();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            Switch(new SGSScanDevice());
-            Switch(new SGSScanDevice());
-            Switch(new SGSScanDevice());
+            Popups.PopupWaiting waiter = new Popups.PopupWaiting(this);
+            Pop(this, waiter);
+            Service.User u = await Service.SGSAPI3.TryLogin(textBox2.Text, textBox1.Text);
+            waiter.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -51,9 +52,16 @@ namespace SGSPos.Pages
                 System.Windows.Forms.Application.Exit();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            Switch(new SGSLogin());
+            if (textBox1.Text.Length >= 4)
+                button1.Enabled = true;
+            else button1.Enabled = false;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            Switch(new SGSHome());
         }
     }
 }

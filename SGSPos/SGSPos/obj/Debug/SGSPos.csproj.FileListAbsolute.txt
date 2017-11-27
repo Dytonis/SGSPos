@@ -18,3 +18,9 @@ C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\e3kdrv.dll
 C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\e3kdrv.pdb
 C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Popups.PopupChoosePrintAction.resources
 C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSRedeem.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\apgcashdrv.dll
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\bin\Debug\apgcashdrv.pdb
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Popups.PopupTellCashDrawer.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Pages.SGSLogin.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Popups.PopupChooseForm.resources
+C:\Users\tanne\Documents\GitHub\SGSPos\SGSPos\SGSPos\obj\Debug\SGSPos.Popups.PopupWaiting.resources

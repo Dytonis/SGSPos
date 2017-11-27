@@ -26,6 +26,8 @@ namespace SGSPos.Popups
         {
             if (Configuration.UseDemoProcedure == false)
             {
+                button3.Enabled = false;
+
                 foreach (string s in ticketIds)
                 {
                     try
@@ -38,13 +40,19 @@ namespace SGSPos.Popups
                         MessageBox.Show("Something went wrong! " + error.Message, "Error", MessageBoxButtons.OK);
                     }
                 }
+
+                button3.Enabled = true;
             }
             else
             {
+                button3.Enabled = false;
+
                 if (ticketIds.Length <= 0)
                     await Demo(1);
                 else
                     await Demo(ticketIds.Length);
+
+                button3.Enabled = true;
             }
 
             PanelParent.Switch(new Pages.SGSHome());

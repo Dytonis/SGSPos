@@ -18,7 +18,7 @@ namespace SGSPos.Service
 {
     public class SGSAPI
     {
-        public static string baseURI = "https://eps-api-2.shoutz.com/";
+        public static string baseURI = "http://pp-conf-api2.shoutz.com/";
 
         public async static Task GetTicketImage(string ticketID)
         {
